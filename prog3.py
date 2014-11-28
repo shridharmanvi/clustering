@@ -41,6 +41,20 @@ for k in jobs.keys():
     rep = [stemmer.stem(word) for word in rep.split()]
     jobs[k][1]= rep
 
+#The below loop constructs the bag of words for every single job description
+bag={}
 
-print jobs[741623][1]
-print len(jobs.keys())
+for k in jobs.keys():
+    sample= jobs[k][1]
+    d={}
+    for word in sample:
+        try:
+            d[word]=sample.count(word)
+        except KeyError:
+            x=1
+        bag[k]=d
+            
+
+
+#print jobs[741623][1]
+#print len(jobs.keys())
