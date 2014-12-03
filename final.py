@@ -6,13 +6,21 @@ import random
 
 from nltk.stem import PorterStemmer
 
+#python final.py /Users/shridharmanvi/Desktop/Projects/dm3/data /Users/shridharmanvi/Desktop/Projects/dm3/clustering
+
 sys.setdefaultencoding("utf-8")
 wordfreq=[]
-d_count=2000
+d_count=919
+
+path=sys.argv[1] #input path from the terminal/command prompt
+outputfile=sys.argv[2]
+
+jobs_file=path+'/jobs.tsv'
+out_file=outputfile+'/output.tsv'
 
 #---------------------------------DATA Import-------------------------------------
 #Import files 
-job=open('/Users/shridharmanvi/Desktop/Projects/dm3/data/jobstry.tsv','rw')
+job=open(jobs_file,'rw')
 
 jobs={}
 
@@ -119,10 +127,9 @@ clusters={}
 final_clusters={}
 
 #choose random clusters
-for k in range(3):
+for k in range(10):
     x=random.choice(bag.keys())
     clusters[k]=bag[x]
-
 
 
 #k-means clustering
@@ -139,55 +146,25 @@ for k in bag.keys():
         if (c==0):d1=d
         elif(c==1):d2=d
         elif(c==2):d3=d
-    score_list=[d1,d2,d3]
+        elif(c==3):d4=d
+        elif(c==4):d5=d
+        elif(c==5):d6=d
+        elif(c==6):d7=d
+        elif(c==7):d8=d
+        elif(c==8):d9=d
+        elif(c==9):d10=d
+    score_list=[d1,d2,d3,d4,d5,d6,d7,d8,d9,d10]
     max_score_index=score_list.index(max(score_list))
-    final_clusters[k]=max_score_index           
+    final_clusters[k]=max_score_index
+    
 
-"""
-def recompute_centroid():
-    count0=0
-    count1=0
-    count2=0
-    for w in final_clusters.keys():
-        if(final_clusters[wo]==0):
-            count0+=1
-        elif(final_clusters[wo]==1):
-            count1+=1
-        elif(final_clusters[wo]==2):
-            count2+=1
-            
-    for wo in final_clusters.keys():
-        zero=clusters[0]
-        one=clusters[1]
-        two=clusters[2]
-        if(final_clusters[wo]==0):
-            for w in bag[wo].keys():
-                try:
-                    zero[w]+=bag[wo][w]
-                except KeyError:
-                    try:
-                        zero[w]=bag[wo][w]
-                    except KeyError:
-                        zero[w]=0
-        elif(final_clusters[wo]==1):
-            for w in bag[wo].keys():
-                try:
-                    one[w]+=bag[wo][w]
-                except KeyError:
-                    try:
-                        one[w]=bag[wo][w]
-                    except KeyError:
-                        one[w]=0
-        elif(final_clusters[wo]==2):
-            for w in bag[wo].keys():
-                try:
-                    two[w]+=bag[wo][w]
-                except KeyError:
-                    try:
-                        two[w]=bag[wo][w]
-                    except KeyError:
-                        two[w]=0        
-    zero=([word for word in rep.split() if word not in stop])
-        
-"""
-print final_clusters
+#Writing to output.tsv
+#The below section writes the output to output.tsv
+j = open(out_file,'w')
+
+for c in final_clusters.keys():
+    v= str(c) +'\t'+ str(final_clusters[c])+'\n'
+    j.write(v)
+
+
+#print final_clusters
